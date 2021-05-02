@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap" rel="stylesheet">
+      <title>TIC TAC TOE</title>
+      <style>
+          html{
+             height:100%;
+          }
+
+          body {
+             text-align: center;
+             background-image: linear-gradient(45deg, gray 0%, black 100%);
+             font-size: 25px;
+             font-weight: bold;
+          }
+
+          #rb {
+             display: none;
+             border: 2px solid gray;
+             width: 160px;
+             background-color: gray;
+             color: lightgray;
+          }
+
+          button {
+             height: 70px; 
+             width: 70px;
+             vertical-align: top;
+             background-color: seagreen;
+             border: none;
+             color: white;
+             text-align: center;
+             text-decoration: none;
+             font-size: 20px;
+             margin-top: 5px;
+             box-shadow:2px 2px 2px rgb(231, 230, 230);
+          }
+
+          button:last-child {
+             width: 50px; 
+             height: 30px;
+          }
+
+          h2 {
+             font-family: 'East Sea Dokdo', cursive;
+             font-size: 70px;
+             color: lightgray;
+             text-shadow: 5px 5px 2px #000;
+          }
+
+          #tt {
+             color: lightgray;
+             text-shadow: 5px 5px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+          }
+      </style>
+  </head>
+  <body>
+      <center>
+          <h2>TIC TAC TOE</h2>
+          <button value = "o" id="1" onclick = "button(1)"></button>
+          <button value = "t" id="2" onclick = "button(2)"></button>
+          <button value = "th" id="3" onclick = "button(3)"></button>
+          <br>
+          <button value = "f" id="4" onclick = "button(4)"></button>
+          <button value = "fi" id="5" onclick = "button(5)"></button>
+          <button value = "s" id="6" onclick = "button(6)"></button>
+          <br>
+          <button value = "se" id="7" onclick = "button(7)"></button>
+          <button value = "e" id="8" onclick = "button(8)"></button>
+          <button value = "n" id="9" onclick = "button(9)"></button>
+          <br>
+          <br>
+          <div id="tt">X</div>
+          <div id="rb" onclick = "retry()">PLAY AGIAN</div>
+      </center>
+      <script>
+          var turn = "1";
+          var colour = "red";
+          var exe = false;
+          var cc = "X";
+          var arr = [];
+          function button(i_v) {
+              this.i_v = i_v;
+              document.getElementById(this.i_v).innerHTML = cc;
+              document.getElementById(this.i_v).style.backgroundColor = colour;
+              document.getElementById(this.i_v).disabled = true;
+              document.getElementById(this.i_v).value = cc;
+              chance();
+          }
+
+          function chance() {
+              turn *= -1;
+              if (turn == 1) {
+                  document.getElementById("tt").innerHTML = "X";
+                  cc = "X";
+                  colour = "red";
+              }
+
+              if (turn == -1) {
+                  document.getElementById("tt").innerHTML = "O";
+                  cc = "O";
+                  colour = "blue";
+              }
+              arr.push(Math.floor(Math.random) * 20);
+              check();
+          }
+
+          function check() {
+              var one = document.getElementById("1").value;
+              var two = document.getElementById("2").value;
+              var three = document.getElementById("3").value;
+              var four = document.getElementById("4").value;
+              var five = document.getElementById("5").value;
+              var six = document.getElementById("6").value;
+              var seven = document.getElementById("7").value;
+              var eight = document.getElementById("8").value;
+              var nine = document.getElementById("9").value;
+
+              if (one == two && one == three) {
+                  text();
+              }
+
+              else if (five == four && five == six) {
+                  text();
+              }
+
+              else if (eight == seven && eight == nine) {
+                  text();
+              }
+
+              else if (four == five && four == six) {
+                  text();
+              }
+
+              else if (four == one && four == seven) {
+                 text();  
+              }
+
+              else if (five == two && five == eight) {
+                 text();
+              }
+
+              else if (six == three && six == nine) {
+                 text();
+              } 
+
+              else if (five == three && five == seven) {
+                 text();
+              }
+
+              else if (five == one && five == nine) {
+                 text();
+              }
+
+              else if (arr.length == 9) { 
+                 document.getElementById("tt").innerHTML = "DRAW";
+                 if (exe == false) {
+                    turn *= -1;
+                    document.getElementById("rb").style.display = "block";
+                    exe = true;
+                  }
+              }
+          }
+
+          function text() {
+              if (exe == false) {
+                  turn *= -1;
+                  document.getElementById("rb").style.display = "block";
+                  exe = true;
+              }
+
+              for (i = 1; i < 10; i++) {
+                  document.getElementById(i).disabled = true;
+              }
+
+              if (turn == 1) {
+                  for (i = 1; i < 10; i++) {
+                      document.getElementById("tt").innerHTML = "X WON!";
+                      if (i == 2 || i == 4 || i == 6 || i == 8) {
+                          document.getElementById(i).style.backgroundColor = "seagreen";
+                          document.getElementById(i).innerHTML = "";
+                      } 
+                      else {
+                          document.getElementById(i).style.backgroundColor = "red";
+                          document.getElementById(i).innerHTML = "X";
+                      }
+                  }
+              }
+
+              else {
+                  for (i = 1; i < 10; i++) {
+                      document.getElementById("tt").innerHTML = "O WON!";
+                      if (i == 5) {
+                          document.getElementById(i).style.backgroundColor = "seagreen";
+                          document.getElementById(i).innerHTML = "";
+                      } 
+                      else {
+                          document.getElementById(i).style.backgroundColor = "blue";
+                          document.getElementById(i).innerHTML = "O";
+                      }
+                  } 
+              }
+          }
+
+          function retry() {
+              turn = "1";
+              colour = "red";
+              exe = false;
+              cc = "X";
+              arr = [];
+              for (i = 1; i < 10; i++) {
+                  document.getElementById(i).style.backgroundColor = "seagreen";
+                  document.getElementById(i).value = i;
+                  document.getElementById(i).innerHTML = "";
+                  document.getElementById("tt").innerHTML = "";
+                  document.getElementById("rb").style.display = "none";
+                  document.getElementById(i).disabled = false;
+              }
+          }  
+      </script>
+  </body>
+</html>
